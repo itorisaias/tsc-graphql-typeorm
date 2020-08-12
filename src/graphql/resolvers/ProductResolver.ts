@@ -1,15 +1,11 @@
+import { Resolver, Query, Mutation, Arg, ID, Int } from 'type-graphql';
 import {
-  Resolver,
-  Query,
-  Mutation,
-  Arg,
-  ID,
-  Int,
-  Subscription,
-} from 'type-graphql';
-import { Product, ProductInput, ProductUpdateInput } from '@src/models/Product';
+  Product,
+  ProductInput,
+  ProductUpdateInput,
+} from '@src/entities/Product';
 
-import logger from '@src/logger';
+import logger from '@src/utils/logger';
 
 @Resolver()
 export class ProductResolver {
@@ -32,7 +28,7 @@ export class ProductResolver {
 
   @Mutation(() => Boolean)
   public async updateProduct(
-    @Arg('id', () => Int) id: number,
+    @Arg('id', () => ID) id: string,
     @Arg('fields', () => ProductUpdateInput) fields: ProductUpdateInput
   ): Promise<boolean> {
     await Product.update({ id }, fields);

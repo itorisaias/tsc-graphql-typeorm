@@ -6,7 +6,7 @@ import depthLimit from 'graphql-depth-limit';
 import expressPino from 'express-pino-logger';
 
 import { resolvers } from '@src/graphql/resolvers';
-import logger from '@src/logger';
+import logger from '@src/utils/logger';
 
 const app = express();
 

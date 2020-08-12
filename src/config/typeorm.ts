@@ -1,19 +1,21 @@
 import { join } from 'path';
-import { createConnection } from 'typeorm';
+import { createConnection, ConnectionOptions } from 'typeorm';
 
-import logger from '@src/logger';
+import logger from '@src/utils/logger';
 
-export async function connect(): Promise<void> {
-  await createConnection({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: '1234',
-    database: 'graphqltsorm',
-    entities: [join(__dirname, '../models/**/**.ts')],
-    synchronize: true,
-  });
+export const config: ConnectionOptions = {
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: '1234',
+  database: 'graphqltsorm',
+  entities: [join(__dirname, '../entities/**/**{.ts,.js}')],
+  synchronize: true,
+};
+
+export async function connectDatabase(): Promise<void> {
+  await createConnection(config);
 
   logger.info('> [database] connected');
 }

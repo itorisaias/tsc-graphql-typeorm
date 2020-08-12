@@ -1,13 +1,12 @@
 import 'reflect-metadata';
 
 import './utils/module-alias';
-import { startServer } from '@src/server';
-import { connect } from '@src/config/typeorm';
-import logger from '@src/logger';
+import logger from '@src/utils/logger';
+import { connectDatabase, startServer } from '@src/config';
 
 (async (): Promise<void> => {
   try {
-    connect();
+    connectDatabase();
     const server = await startServer();
     server.listen(3000, () => {
       logger.info('> [server] listen on port', 3000);

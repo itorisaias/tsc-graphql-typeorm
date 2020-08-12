@@ -1,9 +1,9 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
   BaseEntity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Field, Int, ObjectType, ID, InputType } from 'type-graphql';
 
@@ -12,7 +12,7 @@ import { Field, Int, ObjectType, ID, InputType } from 'type-graphql';
 export class Product extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
-  id!: number;
+  id!: string;
 
   @Field(() => String)
   @Column()
