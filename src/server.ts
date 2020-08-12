@@ -1,11 +1,22 @@
 import express, { Application } from 'express';
+import cors from 'cors';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema, NonEmptyArray } from 'type-graphql';
 import depthLimit from 'graphql-depth-limit';
+import expressPino from 'express-pino-logger';
 
 import { resolvers } from '@src/graphql/resolvers';
+import logger from '@src/logger';
 
 const app = express();
+
+app.use(express.json());
+app.use(
+  expressPino({
+    logger,
+  })
+);
+app.use(cors({ origin: '*' }));
 
 export async function startServer(): Promise<Application> {
   try {
@@ -22,7 +33,7 @@ export async function startServer(): Promise<Application> {
 
     return app;
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     throw error;
   }
 }

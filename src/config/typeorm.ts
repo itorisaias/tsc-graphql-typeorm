@@ -1,6 +1,8 @@
 import { join } from 'path';
 import { createConnection } from 'typeorm';
 
+import logger from '@src/logger';
+
 export async function connect(): Promise<void> {
   await createConnection({
     type: 'postgres',
@@ -13,5 +15,5 @@ export async function connect(): Promise<void> {
     synchronize: true,
   });
 
-  console.log('> [database] connected');
+  logger.info('> [database] connected');
 }

@@ -1,5 +1,15 @@
-import { Resolver, Query, Mutation, Arg, ID, Int } from 'type-graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  ID,
+  Int,
+  Subscription,
+} from 'type-graphql';
 import { Product, ProductInput, ProductUpdateInput } from '@src/models/Product';
+
+import logger from '@src/logger';
 
 @Resolver()
 export class ProductResolver {
@@ -8,7 +18,7 @@ export class ProductResolver {
     @Arg('variables', () => ProductInput) variables: ProductInput
   ): Promise<Product> {
     const newProduct = Product.create(variables);
-    console.log(newProduct);
+    logger.info(newProduct);
     return await newProduct.save();
   }
 
@@ -26,7 +36,7 @@ export class ProductResolver {
     @Arg('fields', () => ProductUpdateInput) fields: ProductUpdateInput
   ): Promise<boolean> {
     await Product.update({ id }, fields);
-    console.log({ id, fields });
+    logger.info({ id, fields });
     return true;
   }
 
