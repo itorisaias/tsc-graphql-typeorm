@@ -1,18 +1,20 @@
 import express, { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
-import { PingResolver } from './graphql/ping';
-import { ProductResolver } from './graphql/resolvers/ProductResolver';
+import { buildSchema, NonEmptyArray } from 'type-graphql';
+import depthLimit from 'graphql-depth-limit';
+
+import { resolvers } from '@src/graphql/resolvers';
 
 const app = express();
 
 export async function startServer(): Promise<Application> {
   try {
     const schema = await buildSchema({
-      resolvers: [PingResolver, ProductResolver],
+      resolvers: resolvers as NonEmptyArray<Function>,
     });
     const server = new ApolloServer({
       schema,
+      validationRules: [depthLimit(5)],
       context: ({ req, res }) => ({ req, res }),
     });
 

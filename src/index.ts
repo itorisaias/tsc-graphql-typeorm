@@ -1,5 +1,5 @@
-import './utils/module-alias';
 import 'reflect-metadata';
+import './utils/module-alias';
 import { startServer } from '@src/server';
 import { connect } from '@src/config/typeorm';
 
